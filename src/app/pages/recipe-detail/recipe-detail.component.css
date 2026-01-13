@@ -1,0 +1,17 @@
+/* Urdu font + RTL layout */
+.urdu-layout {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Specific text parts */
+.urdu-text {
+  font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', Arial, sans-serif;
+  line-height: 2.2; /* Urdu ko readable banata hai */
+}
+
+/* Steps number alignment adjust */
+.urdu-layout ol li span:first-child {
+  margin-left: 1rem;
+  margin-right: 0 !important;
+}

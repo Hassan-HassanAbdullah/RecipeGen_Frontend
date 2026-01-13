@@ -1,0 +1,137 @@
+<div
+  class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4 sm:p-6 md:p-8 shadow-md max-w-full sm:max-w-3xl md:max-w-4xl lg:max-w-5xl mx-auto">
+  <div class="flex flex-col gap-4">
+
+    <!-- Input + Add Button -->
+    <div>
+      <label for="ingredientInput"
+        class="block text-sm sm:text-base font-medium text-gray-700 dark:text-gray-300 mb-2">
+        What ingredients do you have? <span class="hidden sm:inline">(press Enter after each)</span>
+      </label>
+
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+        <input [(ngModel)]="ingredientInput" (keyup.enter)="addIngredient()"
+          placeholder="Add an ingredient (e.g., Tomato)"
+          class="flex-1 text-sm sm:text-base text-gray-700 dark:text-gray-200 px-3 sm:px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-orange-400" />
+
+        <button type="button"
+          class="w-full sm:w-auto inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md px-4 py-2 bg-gradient-to-r from-[#EC823C] to-[#F76C10] hover:from-orange-500 hover:to-orange-600 text-white font-medium shadow-lg transition"
+          (click)="addIngredient()">
+          Add
+        </button>
+      </div>
+    </div>
+
+    <!-- 🌿 Your Ingredients -->
+    <div *ngIf="ingredients.length > 0" class="flex flex-col gap-3">
+      <label class="block text-sm sm:text-base font-semibold text-gray-700 dark:text-gray-200">
+        Your ingredients
+      </label>
+
+      <div class="flex flex-wrap gap-2">
+        <div *ngFor="let item of ingredients; let i = index"
+          class="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium backdrop-blur-lg bg-green-100/60 dark:bg-green-900/40 text-green-900 dark:text-green-100 px-2.5 sm:px-3 py-1 rounded-full shadow-sm border border-green-300/50 dark:border-green-700/50 hover:scale-105 hover:shadow-md hover:bg-green-200/70 dark:hover:bg-green-800/60 transition duration-200 ease-in-out">
+
+          <span>{{ item }}</span>
+          <button (click)="removeIngredient(i)"
+            class="text-green-700 dark:text-green-300 font-bold hover:text-red-500 dark:hover:text-red-400 transition duration-200">
+            ×
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🍳 Quick Add -->
+    <div class="space-y-2 mt-4">
+      <h4 class="font-semibold text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+        Quick add:
+      </h4>
+      <div class="flex flex-wrap gap-2">
+        <div *ngFor="let quick of ['Tomatoes','Onions','Garlic','Rice','Chicken','Eggs','Potatoes','Bell Peppers']"
+          (click)="ingredientInput=quick; addIngredient()"
+          class="cursor-pointer inline-flex items-center rounded-lg px-2.5  py-1.5 text-xs  font-medium border border-gray-200 dark:border-gray-600 bg-white/70 dark:bg-gray-800/50 text-gray-800 dark:text-gray-200 hover:bg-orange-100 dark:hover:bg-orange-600/60 hover:text-orange-700 dark:hover:text-white hover:scale-105 shadow-sm transition duration-200 ease-in-out">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3  mr-1" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+          </svg>
+          {{quick}}
+        </div>
+      </div>
+    </div>
+
+    <!-- Generate Button -->
+    <div class="flex justify-center mt-4">
+      <button type="button" (click)="generateRecipe()"
+        class="w-full sm:w-auto flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium text-white bg-gradient-to-r from-[#EC823C] to-[#F76C10] hover:from-orange-500 hover:to-orange-600 shadow-lg transition"
+        [disabled]="isloading">
+
+        <ng-container *ngIf="!isloading; else loadingSpinner">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 sm:mr-3" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z">
+            </path>
+            <path d="M20 3v4"></path>
+            <path d="M22 5h-4"></path>
+            <path d="M4 17v2"></path>
+            <path d="M5 18H3"></path>
+          </svg>
+          Generate Recipe
+        </ng-container>
+
+        <ng-template #loadingSpinner>
+          <svg class="animate-spin w-5 sm:w-6 h-5 sm:h-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+          </svg>
+          Generating...
+        </ng-template>
+      </button>
+    </div>
+
+    <!-- Recipe Card -->
+    <div *ngIf="recipe" class="bg-white dark:bg-gray-900 rounded-xl p-4 sm:p-6 shadow-lg mt-6 w-full">
+      <h2 class="text-xl sm:text-2xl font-bold text-gray-800 dark:text-gray-100 flex items-center gap-2">
+        {{ recipe.name }}
+      </h2>
+
+      <div class="mt-3 sm:mt-4 flex flex-wrap gap-2">
+        <span
+          class="bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-200 px-2.5 py-1 text-xs sm:text-sm rounded-full">
+          ⏱ {{ recipe.timeToCook }}
+        </span>
+        <span
+          class="bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-200 px-2.5 py-1 text-xs sm:text-sm rounded-full">
+          🍽 {{ recipe.servings }} servings
+        </span>
+        <span
+          class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300 px-2.5 py-1 text-xs sm:text-sm rounded-full">
+          Easy
+        </span>
+      </div>
+
+      <p class="mt-3 sm:mt-4 text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">
+        {{ recipe.description }}
+      </p>
+
+      <div class="mt-4 sm:mt-6 flex flex-col sm:flex-row gap-2 sm:gap-3">
+        <a routerLink="/recipe-detail" [queryParams]="{ recipe: getEncodedRecipe() }" class="w-full sm:w-auto">
+          <button
+            class="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white px-4 sm:px-5 py-2.5 rounded-lg flex items-center justify-center gap-2 transition">
+            View full recipe
+          </button>
+        </a>
+
+        <button type="button" (click)="handleSave(recipe)"
+          class="w-full sm:w-auto border border-orange-500 text-orange-600 hover:bg-orange-500 hover:text-white px-4 sm:px-5 py-2.5 rounded-lg flex items-center justify-center gap-2 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 sm:w-5 h-4 sm:h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M6.09 21.06a1 1 0 0 1-1-1L4.94 5.4a2.26 2.26 0 0 1 2.18-2.35L16.71 3a2.27 2.27 0 0 1 2.23 2.31l.14 14.66a1 1 0 0 1-.49.87 1 1 0 0 1-1 0l-5.7-3.16-5.29 3.23a1.2 1.2 0 0 1-.51.15zm5.76-5.55a1.11 1.11 0 0 1 .5.12l4.71 2.61-.12-12.95c0-.2-.13-.34-.21-.33l-9.6.09c-.08 0-.19.13-.19.33l.12 12.9 4.28-2.63a1.06 1.06 0 0 1 .51-.14z" />
+          </svg>
+          Save recipe
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

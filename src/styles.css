@@ -1,0 +1,117 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "tailwindcss";
+
+
+
+@custom-variant dark (&:where(.dark, .dark *));
+@import "flowbite/src/themes/default";
+
+
+
+@layer utilities {
+  .animate-slide-in {
+    animation: slideInFromRight 0.4s ease-out forwards;
+  }
+
+  @keyframes slideInFromRight {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
+
+
+/* styles.css or Tailwind classes can be used */
+.blur-background {
+  pointer-events: none; /* disables interaction */
+  filter: blur(4px);
+}
+
+
+
+/* ------------------ Pagination Container ------------------ */
+.ngx-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem; /* <-- gap control yahan se hoga */
+  margin-top: 2rem;
+  padding: 0;
+  list-style: none;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ------------------ Pagination Buttons ------------------ */
+.ngx-pagination li a,
+.ngx-pagination li button {
+  display: inline-block;
+  min-width: 2.5rem;
+  padding: 0.6rem 1.2rem;  /* ✅ Consistent padding */
+  border-radius: 9999px;
+  background: #f3f4f6;
+  color: #374151;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.25s ease-in-out;
+}
+
+/* ------------------ Hover Effect ------------------ */
+.ngx-pagination li a:hover:not(.current),
+.ngx-pagination li button:hover:not(.current) {
+  background: #EC823C;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(236, 130, 60, 0.3);
+}
+
+/* ------------------ Active (Current Page) ------------------ */
+.ngx-pagination .current,
+.ngx-pagination .current > span {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;  
+  border-radius: 9999px;
+  background: #EC823C !important;
+  color: #fff !important;
+  font-weight: 600;
+  cursor: default;
+}
+
+/* ------------------ Dark Mode ------------------ */
+body.dark .ngx-pagination li a,
+body.dark .ngx-pagination li button {
+  background: #1f2937;
+  color: #d1d5db;
+}
+
+body.dark .ngx-pagination li a:hover:not(.current),
+body.dark .ngx-pagination li button:hover:not(.current) {
+  background: #FBBF24;
+  color: #1f2937;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(251, 191, 36, 0.3);
+}
+
+body.dark .ngx-pagination .current,
+body.dark .ngx-pagination .current span {
+  padding: 0.6rem 1.2rem;  /* ✅ same padding */
+  background: #FBBF24 !important;
+  color: #1f2937 !important;
+  border-radius: 50px;
+  font-weight: 700;
+}

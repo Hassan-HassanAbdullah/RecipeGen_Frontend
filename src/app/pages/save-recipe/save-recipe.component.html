@@ -1,0 +1,19 @@
+<div class="my-5 px-4 sm:px-8 py-4">
+    <div class="flex items-center justify-between px-0 sm:px-7">
+        <h1 class="font-semibold text-xl sm:text-2xl lg:text-[1.5rem] dark:text-white">Liked Recipes ({{savedRecipes.length}})</h1>
+    </div>
+
+    <!-- No Recipes -->
+    <div *ngIf="savedRecipes.length === 0" class="col-span-full text-center py-12">
+        <p class="text-gray-500 dark:text-gray-400 text-lg">
+            No recipes saved yet. Start exploring and save your favorites!
+        </p>
+    </div> 
+
+    <!-- Recipe Grid -->
+    <div *ngIf="savedRecipes.length > 0" class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div *ngFor="let recipe of savedRecipes">
+            <app-recipe-card [recipe]="recipe"></app-recipe-card>
+        </div>
+    </div>
+</div>

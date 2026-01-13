@@ -1,0 +1,32 @@
+<div class="my-5 px-4 sm:px-8 py-4">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 px-0 sm:px-7">
+        <h1 class="font-semibold text-xl sm:text-2xl lg:text-[1.5rem] dark:text-white text-center sm:text-left">Uploded Recipes({{uplodeRecipes.length}})</h1>
+        
+        <a routerLink="/recipe-form" class="w-full sm:w-auto">
+            <button type="button" class="w-full sm:w-auto justify-center text-white bg-[#EC823C] hover:bg-[#F76C10] focus:ring-4 focus:outline-none focus:ring-[#F9AF7F] font-medium rounded-lg text-sm px-4 py-2 flex gap-2.5 items-center dark:bg-[#F76C10] dark:hover:bg-[#EC823C] dark:focus:ring-[#F9AF7F]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                     class="lucide lucide-plus h-4 w-4 mr-2">
+                    <path d="M5 12h14"></path>
+                    <path d="M12 5v14"></path>
+                </svg>
+                Create new recipe
+            </button>
+        </a>
+    </div>
+
+    <div *ngIf="uplodeRecipes.length === 0" class="col-span-full text-center py-12">
+        <p class="text-gray-500 dark:text-gray-400 text-lg">
+            No recipe uploded yet.
+        </p>
+    </div>
+
+    <div *ngIf="uplodeRecipes.length > 0" class="mt-10 grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div *ngFor="let recipe of uplodeRecipes">
+            <app-recipe-card [recipe]="recipe"></app-recipe-card>
+        </div>
+    </div>
+
+
+    
+</div>
